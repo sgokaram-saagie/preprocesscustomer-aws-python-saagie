@@ -21,7 +21,7 @@ saagie {
     }
 
      jobVersion {
-      commandLine= "python preprocess-customer.py"
+      commandLine= "python preprocess-customerdata.py"
       releaseNote = "Deploying job from Master Branch"
       runtimeVersion = "3.6"
       packageInfo {
