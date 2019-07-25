@@ -1,1 +1,2 @@
-PyAthenaJDBC
+boto3
+pandas
