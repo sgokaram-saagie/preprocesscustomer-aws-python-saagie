@@ -17,7 +17,7 @@ saagie {
           name = 'PreProcess Customer Data'
           description = 'Demo Job Deployment from Gradle'
           category = 'Processing'
-          technology = '13522063-c18b-4ecd-b61f-3bae1e0ad93c'
+          technology = '0db6d0a7-ad4b-45cd-8082-913a192daa25'
     }
 
      jobVersion {
