@@ -28,7 +28,7 @@ pipeline {
                     SAAGIE_PLATFORM = '4'
             }
            steps{
-               sh "gradle projectsCreateJob -b ./build.gradle.projectsCreateJob  -Psaagieusername=$SAAGIE_CREDS_USR -Psaagiepassword=$SAAGIE_CREDS_PSW -Psaagieplatform=$SAAGIE_PLATFORM -Psaagieurl=$SAAGIE_URL -Psaagiesaagieprojectid=$SAAGIE_PROJECT"
+               sh "gradle projectsCreateJob -b ./build.gradle.projectsCreateJob  -Psaagieusername=$SAAGIE_CREDS_USR -Psaagiepassword=$SAAGIE_CREDS_PSW -Psaagieplatform=$SAAGIE_PLATFORM -Psaagieurl=$SAAGIE_URL -Psaagieprojectid=$SAAGIE_PROJECT"
             }          
           
        }
