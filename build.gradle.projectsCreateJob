@@ -1,5 +1,5 @@
 plugins {
-  id "io.saagie.gradle-saagie-dataops-plugin" version "1.1.8"
+  id "io.saagie.gradle-saagie-dataops-plugin" version "1.2.1"
 }
 
 saagie {
@@ -11,7 +11,7 @@ saagie {
 	    jwt = true
     }
     project {
-        id = 'ec8c5cea-3dfd-4496-87a0-89f69101dccd'
+        id = saagieprojectid
     }
     job {
           name = 'PreProcess Customer Data'
