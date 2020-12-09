@@ -70,7 +70,7 @@ task projectCreateJob1(type: ProjectCreateJobTask) { // <====== Create the first
 
 
 task projectsRunJob1(type: ProjectRunJobTask) { // <====== Create the second job
-    dependsOn(['projectCreateJob1'])
+//    dependsOn(['projectCreateJob1'])
     configuration = saagie {}
     doFirst {
         projectsRunJob1.configuration = saagie {
@@ -105,7 +105,7 @@ task projectsRunJob1(type: ProjectRunJobTask) { // <====== Create the second job
 
 task projectGetJobInstance1Status( // <======== 
     type: ProjectGetJobInstanceStatusTask) {
-    dependsOn(['projectsRunJob1'])
+  //  dependsOn(['projectsRunJob1'])
     configuration = saagie {
         server {
             url = saagieUrl
