@@ -1,5 +1,5 @@
 plugins {
-  id "io.saagie.gradle-saagie-dataops-plugin" version "2.1.1"
+  id "io.saagie.gradle-saagie-dataops-plugin" version "2.1.19"
 }
 
 saagie {
