@@ -108,11 +108,12 @@ task projectGetJobInstance1Status( // <========
   //  dependsOn(['projectsRunJob1'])
     configuration = saagie {
         server {
-            url = saagieurl
-            login = saagieuserid
-            password = saagiepassword
-            environment = saagieplatformid
-            jwt = true
+                url = saagieurl
+                login = saagieuserid
+                password = saagiepassword
+                environment = saagieplatformid
+                jwt = true
+                acceptSelfSigned = true
         }
     }
     doFirst {
