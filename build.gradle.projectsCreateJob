@@ -108,7 +108,7 @@ task projectGetJobInstance1Status( // <========
   //  dependsOn(['projectsRunJob1'])
     configuration = saagie {
         server {
-            url = saagieUrl
+            url = saagieurl
             login = saagieuserid
             password = saagiepassword
             environment = saagieplatformid
