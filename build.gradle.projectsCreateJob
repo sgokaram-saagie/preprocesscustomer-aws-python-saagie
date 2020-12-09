@@ -1,31 +1,136 @@
+import io.saagie.plugin.dataops.tasks.projects.job.ProjectCreateJobTask;
+import io.saagie.plugin.dataops.tasks.projects.pipeline.ProjectCreatePipelineTask;
+import io.saagie.plugin.dataops.tasks.projects.job.ProjectRunJobTask;
+import io.saagie.plugin.dataops.tasks.projects.pipeline.ProjectRunPipelineTask;
+import io.saagie.plugin.dataops.tasks.projects.pipelineInstance.ProjectGetPipelineInstanceStatusTask;
+import io.saagie.plugin.dataops.tasks.projects.jobInstance.ProjectGetJobInstanceStatusTask;
+
+
+import groovy.json.JsonSlurper;
+
 plugins {
-  id "io.saagie.gradle-saagie-dataops-plugin" version "2.1.19"
+    id 'groovy'
+    id 'io.saagie.gradle-saagie-dataops-plugin' version '2.1.19'// <==== dependencies added with version 2.0.15
 }
 
-saagie {
-    server {
-        url = saagieurl
-        login = saagieusername
-	    password = saagiepassword
-        environment = saagieplatform
-	    jwt = true
-    }
-    project {
-        id = saagieprojectid
-    }
-    job {
-          name = 'PreProcess Customer Data'
-          description = 'Demo Job Deployment from Gradle'
-          category = 'Processing'
-          technology = '0db6d0a7-ad4b-45cd-8082-913a192daa25'
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'gradle.plugin.io.saagie', name: 'gradle-saagie-dataops-plugin', version: '2.0.19' // <==== dependencies added with version 2.0.7
+}
+
+def jsonSlurper = new JsonSlurper()
+def jobid_1, jobid_1_instance, jobid_2 , pipleline_id , pipleline_instance_id , pipeline_status   // <==== var will be used to store the new jobs ids
+
+task projectCreateJob1(type: ProjectCreateJobTask) { // <====== Create the first job
+    configuration = saagie {} // <===== Initialise configuration
+    doFirst {
+        projectCreateJob1.configuration = saagie {
+            server {
+                url = saagieurl
+                login = saagieuserid
+                password = saagiepassword
+                environment = saagieplatformid
+                jwt = true
+                acceptSelfSigned = true
+            }
+            project {
+        		id = saagieprojectid
+		    }
+            job {
+                name = "PreProcess Customer Data"
+                description ="Demo Job CI/CD"
+                category ="Extraction"
+                technology ='0db6d0a7-ad4b-45cd-8082-913a192daa25'
+                isScheduled =false
+                cronScheduling =null
+            }
+            jobVersion {
+                commandLine= "python {file} arg1 arg2"
+                releaseNote ="Release job 1"
+                runtimeVersion = "3.6"
+                packageInfo {
+                    name= "preprocesscustomer.zip"
+                }
+            }
+        }
     }
 
-     jobVersion {
-      commandLine= "python preprocess-customerdata.py"
-      releaseNote = "Deploying job from Master Branch"
-      runtimeVersion = "3.6"
-      packageInfo {
-        name= "preprocesscustomer.zip"
-      }
-     }
+    taskName = 'projectCreateJob1'
+    group = 'Saagie'
+    description= 'create job for PreProcess Customer Data'
+    doLast {
+        def responsesDataCreatedJob = jsonSlurper.parseText(projectCreateJob1.result) // <===== projectCreateJob type store its result inside the result property
+        jobid_1 = responsesDataCreatedJob.id // <===== We store the id for later use
+        new File(saagiejobid1_file).text = jobid_1
+    }
+}
+
+
+task projectsRunJob1(type: ProjectRunJobTask) { // <====== Create the second job
+    dependsOn(['projectCreateJob1'])
+    configuration = saagie {}
+    doFirst {
+        projectsRunJob1.configuration = saagie {
+            server {
+                url = saagieurl
+                login = saagieuserid
+                password = saagiepassword
+                environment = saagieplatformid
+                jwt = true
+                acceptSelfSigned = true
+            }
+
+            project {
+                id = saagieProject
+            }
+
+            job {
+                id = saagiejobid1
+            }
+        }
+    }
+
+    taskName = 'projectsRunJob1'
+    group = 'Saagie'
+    description = 'Run job on saagie platform'
+    doLast {
+        def responsesDataRunJob = jsonSlurper.parseText(projectsRunJob1.result) // <===== projectCreateJob type store its result inside the result property
+        jobid_1_instance = responsesDataRunJob.id // <===== We store the id for later use
+        new File(saagiejobid1_instance_file).text = jobid_1_instance
+    }
+}
+
+task projectGetJobInstance1Status( // <======== 
+    type: ProjectGetJobInstanceStatusTask) {
+    dependsOn(['projectsRunJob1'])
+    configuration = saagie {
+        server {
+            url = saagieUrl
+            login = saagieuserid
+            password = saagiepassword
+            environment = saagieplatformid
+            jwt = true
+        }
+    }
+    doFirst {
+        projectGetJobInstance1Status.configuration = saagie {
+            project {
+                id = saagieProject
+            }
+
+            jobinstance {
+                id = jobid_1_instance
+            }
+        }
+    }
+    description = 'get job instance status'
+    taskName = 'projetGetJobInstance1Status'
+    doLast {
+        def responsesJobInstanceRun = jsonSlurper.parseText(projectGetJobInstance1Status.result) // <==== same a projectCreateJob 1
+        def job_run_status = responsesJobInstanceRun.status
+        new File(saagiejobid1_instancerun_file).text = job_run_status
+    }
 }
