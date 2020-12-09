@@ -69,11 +69,11 @@ task projectCreateJob1(type: ProjectCreateJobTask) { // <====== Create the first
 }
 
 
-task projectsRunJob1(type: ProjectRunJobTask) { // <====== Create the second job
+task projectRunJob1(type: ProjectRunJobTask) { // <====== Create the second job
 //    dependsOn(['projectCreateJob1'])
     configuration = saagie {}
     doFirst {
-        projectsRunJob1.configuration = saagie {
+        projectRunJob1.configuration = saagie {
             server {
                 url = saagieurl
                 login = saagieuserid
@@ -93,11 +93,11 @@ task projectsRunJob1(type: ProjectRunJobTask) { // <====== Create the second job
         }
     }
 
-    taskName = 'projectsRunJob1'
+    taskName = 'projectRunJob1'
     group = 'Saagie'
     description = 'Run job on saagie platform'
     doLast {
-        def responsesDataRunJob = jsonSlurper.parseText(projectsRunJob1.result) // <===== projectCreateJob type store its result inside the result property
+        def responsesDataRunJob = jsonSlurper.parseText(projectRunJob1.result) // <===== projectCreateJob type store its result inside the result property
         jobid_1_instance = responsesDataRunJob.id // <===== We store the id for later use
         new File(saagiejobid1_instance_file).text = jobid_1_instance
     }
