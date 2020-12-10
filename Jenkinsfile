@@ -1,8 +1,9 @@
+jobID=''
+jobID_instance_id=''
+
 pipeline {
 
    agent any
-   jobID=''
-   jobID_instance_id=''
 
    environment {
         MVN_HOME = '/Applications/apache-maven-3.6.1'
@@ -42,11 +43,10 @@ pipeline {
            environment {
                     SAAGIE_PROJECT = 'cad415fc-a809-4f5a-919e-668dccb4a2de'
                     SAAGIE_PLATFORM = '4'
-                    SAAGIE_JOBID = jobID
           }
            steps{
                script{
-               sh "gradle  projectCreateJob1 -b ./build.gradle.projectsCreateJob  -Psaagieuserid=$SAAGIE_CREDS_USR -Psaagiepassword=$SAAGIE_CREDS_PSW -Psaagieplatformid=$SAAGIE_PLATFORM -Psaagieurl=$SAAGIE_URL -Psaagieprojectid=$SAAGIE_PROJECT -Psaagiejobid1=$SAAGIE_JOBID -Psaagiejobid1_instance_file='./job1_id_instance' "
+               sh "gradle  projectRunJob1 -b ./build.gradle.projectsCreateJob  -Psaagieuserid=$SAAGIE_CREDS_USR -Psaagiepassword=$SAAGIE_CREDS_PSW -Psaagieplatformid=$SAAGIE_PLATFORM -Psaagieurl=$SAAGIE_URL -Psaagieprojectid=$SAAGIE_PROJECT -Psaagiejobid=${jobID} -Psaagiejobid1_instance_file='./job1_id_instance' "
                jobID_instance_id = readFile('./job1_id_instance')
                println(jobID_instance_id)
                }
