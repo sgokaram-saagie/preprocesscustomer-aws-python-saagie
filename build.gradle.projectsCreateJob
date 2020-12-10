@@ -52,7 +52,7 @@ task projectCreateJob1(type: ProjectCreateJobTask) { // <====== Create the first
                 releaseNote ="Release job 1"
                 runtimeVersion = "3.6"
                 packageInfo {
-                    name= "preprocesscustomer.zip"
+                    name= "preprecess-customerdata-demo.py"
                 }
             }
         }
