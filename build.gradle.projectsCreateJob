@@ -84,11 +84,11 @@ task projectRunJob1(type: ProjectRunJobTask) { // <====== Create the second job
             }
 
             project {
-                id = saagieProject
+                id = saagieprojectid
             }
 
             job {
-                id = saagiejobid1
+                id = saagiejobid
             }
         }
     }
@@ -119,11 +119,11 @@ task projectGetJobInstance1Status( // <========
     doFirst {
         projectGetJobInstance1Status.configuration = saagie {
             project {
-                id = saagieProject
+                id = saagieprojectid
             }
 
             jobinstance {
-                id = jobid_1_instance
+                id = saagiejobinstanceid
             }
         }
     }
